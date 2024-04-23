@@ -5,17 +5,17 @@
 ## 1. Git Merge
 
 - Ví dụ trong trường gộp giữa nhánh `feature` vào nhánh `main`, ta thực hiện như sau:
-    - git checkout feature
-    - git merge main      
-=> Kết quả: tạo ra một commit mới ngay trên nhánh `main`, commit này gắn kết lịch sử của cả 2 nhánh `main` và `feature`
+  - git checkout feature
+  - git merge main
+    => Kết quả: tạo ra một commit mới ngay trên nhánh `main`, commit này gắn kết lịch sử của cả 2 nhánh `main` và `feature`
 
 ![Git merge](asset/git_merge.png)
 
 ## 2. Git Rebase
 
 - Còn 1 cách khác để tích hợp là sử dụng `rebase`
-    - git checkout feature
-    - git rebase master
+  - git checkout feature
+  - git rebase master
 
 => Đưa toàn bộ những commit mới tạo ở nhánh `feature` nối tiếp vào ngọn của nhánh `master`, nó sẽ viết lại lịch sử của project bằng cách tạo ra những commit mới tương ứng với mỗi commit ban đầu của nhánh `feature`
 
@@ -24,16 +24,21 @@
 - Lợi ích của `rebase` so với `merge` là bạn sẽ nhận được 1 lịch sử commit rõ ràng, dễ theo dõi hơn (loại bỏ những commit không cần thiết khi sử dụng `git merge`)
 
 ### a - Quy trình làm việc với git rebase
+
 - Vì rebase có thể gây ra xung đột giữa các commit lẫn nhau và có những commit rác => Vì vậy phải sử dụng git rebase một cách đúng
+
 #### a.1 - Local cleanup
+
 - Trong quá trình phát triển một tính năng trên branch riêng, các dev có thể có nhiều commit => Để cây git được clean và gọn hơn ta phải tiến hành squash commit thông qua tính năng tự rebase trên nhánh chính `feature`
 - Ví dụ bạn có 3 commit liên tục cần gộp lại thành 1 commit:
+
 ```
 git switch feature
-git rebase -i HEAD~3
+git rebase -i HEAD~3 (Cho phép ta có thể lựa chọn commit muốn bỏ, hoặc gộp các commit ở dưới thành 1 commit chung nhưng k nên sử dụng cách này mà nên sử dụng chery pick)
 ```
 
 Màn hình hiển thị một tệp editor hiển thị lịch sử commits, chúng ta tiến hành cỉnh sửa file theo syntax. Các options bao gồm:
+
 - p: pick - giữ lại commit
 - r: reword - giữ lại commit và sửa message
 - s: squash - bỏ qua commit nhưng tích hợp log vào commit liền trước
@@ -62,11 +67,12 @@ pick 7b36971 something to move before patch B
 # However, if you remove everything, the rebase will be aborted.
 #
 ```
-Tiến hành giữ lại commit đầu tiền và squash toàn bộ các commits liền sau bằng cách thay thế pick thành squash. Lưu file :wqvà thoát qa!.
+
+Tiến hành giữ lại commit đầu tiền và squash toàn bộ các commits liền sau bằng cách thay thế pick thành squash. Lưu file :wq và thoát qa!.
 
 #### a.2 - Rebasing from main
 
-- Tiếp theo, sau khi đã gom tất cả các commit của mình làm một chúng ta bắt đầu tiến hành rebase so với branch main. Lưu ý, trước đó ta cần nhảy sang nhánh mainvà tiến hành pull code từ remote để cập nhật các thay đổi mới nhất trên main.
+- Tiếp theo, sau khi đã gom tất cả các commit của mình làm một chúng ta bắt đầu tiến hành rebase so với branch main. Lưu ý, trước đó ta cần nhảy sang nhánh main và tiến hành pull code từ remote để cập nhật các thay đổi mới nhất trên main.
 
 ```
 git switch main
@@ -76,13 +82,21 @@ git rebase -i main feature
 ```
 
 #### a.4 - Push force to feature
-- Sau khi đã xử lý các conflicts liên quan và squash các commit mong muốn, lúc này các commits trên mainđã được cắt nối tuyến tính vào ngay đầu commit trên feature . Khi đó, chúng ta sẵn sàng push lên remote và sẵn sàng tạo Merge/Pull request
+
+- Sau khi đã xử lý các conflicts liên quan và squash các commit mong muốn, lúc này các commits trên main đã được cắt nối tuyến tính vào ngay đầu commit trên feature . Khi đó, chúng ta sẵn sàng push lên remote và sẵn sàng tạo Merge/Pull request
 
 ```
 git push origin feature --force 
 ```
+
 Sau khi rebase, lịch sử commit local trên nhánh feature đã thay đổi và conflict so với nhánh feature trên remote, vì thế ta cần push force để ghi đè toàn bộ cây Git trên branch featue.
 
 ## 3. So sánh Git Rebase và git merge
 
 ![Git merge](asset/git_rebase_vs_git_merge.png)
+
+
+
+
+
+![](assets/20240422_150854_image.png)
