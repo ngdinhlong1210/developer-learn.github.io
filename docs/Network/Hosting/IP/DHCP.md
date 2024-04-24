@@ -19,3 +19,27 @@
     - Cuối cùng, máy chủ sẽ gửi tin báo nhận (ACK) xác nhận thiết bị đã được chấp thuận với IP và thời gian sử dụng IP đến khi có địa chỉ mới
 
 
+## Nguy cơ có thể gặp của DHCP
+
+#### 1. DHCP Flooding
+
+![DHCP-Flooding](assets/DHCP-Flooding.png)
+
+Tưởng tượng đơn giản trường hợp như sau: 
+- Ví dụ ta có 1 client khi bắt đầu kết nối sẽ gửi một gói tin *DHCP Discover* tới DHCP Server
+- Sau đó, DHCP Server sẽ cấp phát 1 IP và trả về thông qua DHCP Offer
+- Lúc này, client đó sẽ **FAKE MAC** và liên tục gửi lại gói tin DHCP DISCOVER tới cho DHCP Server 
+
+=> Các IP sẽ được cấp tối đa và các client sau sẽ không còn IP để kết nối
+
+
+#### 2. Rouge DHCP Server
+
+![Rouge DHCP](assets/Rouge-DHCP.png)
+
+Trường hợp như sau:
+- Mạng của ta sẽ có 2 con DHCP server, 1 con do nhà quản trị cung cập, 1 con do có 1 người ngoài (bên t3) cố tình cắm vào
+- Lúc này sẽ xảy ra trường hợp:
+    - Khi client gửi gói tin DHCP Discover tới DHCP Server, sẽ có những trường hợp gửi đến *ROUGE DHCP Server*, và ta không thể được cấp IP để kết nối được với internet
+    - Khi client gửi gói tin DHCP Discover tới DHCP Server, ROUGE DHCP Server sẽ cung cấp sai thông tin Default Gateway => Sẽ có nguy cơ bị nghe lén, và sau này các thông tin được gửi thông qua đường truyền mạng sẽ đều bị đánh cắp hết
+    - Gửi sai thông tin DNS, lúc này nếu chúng ta tìm youtube.com thì nó sẽ điều hướng ta tới một trang web giả mạo => rất nguy hiẻm
