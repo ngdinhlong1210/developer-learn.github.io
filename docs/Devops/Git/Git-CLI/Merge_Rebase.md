@@ -9,7 +9,7 @@
   - git merge main
     => Kết quả: tạo ra một commit mới ngay trên nhánh `main`, commit này gắn kết lịch sử của cả 2 nhánh `main` và `feature`
 
-![Git merge](asset/git_merge.png)
+![Git merge](assets/git_merge.png)
 
 ## 2. Git Rebase
 
@@ -19,7 +19,7 @@
 
 => Đưa toàn bộ những commit mới tạo ở nhánh `feature` nối tiếp vào ngọn của nhánh `master`, nó sẽ viết lại lịch sử của project bằng cách tạo ra những commit mới tương ứng với mỗi commit ban đầu của nhánh `feature`
 
-![Git merge](asset/git_rebase.png)
+![Git merge](assets/git_rebase.png)
 
 - Lợi ích của `rebase` so với `merge` là bạn sẽ nhận được 1 lịch sử commit rõ ràng, dễ theo dõi hơn (loại bỏ những commit không cần thiết khi sử dụng `git merge`)
 
@@ -93,10 +93,10 @@ Sau khi rebase, lịch sử commit local trên nhánh feature đã thay đổi v
 
 ## 3. So sánh Git Rebase và git merge
 
-![Git merge](asset/git_rebase_vs_git_merge.png)
+![Git merge](assets/git_rebase_vs_git_merge.png)
 
 
 
 
 
-![](assets/20240422_150854_image.png)
+![](assetss/20240422_150854_image.png)
